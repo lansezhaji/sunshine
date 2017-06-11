@@ -4,7 +4,10 @@ import Home from './views/Home.vue'
 import Main from './views/Main.vue'
 import Table from './views/nav1/Table.vue'
 import Form from './views/nav1/Form.vue'
-import user from './views/nav1/user.vue'
+import user from './views/user/myAccount.vue'
+
+import promotion from './views/techStack/promotion.vue'  //每日提升
+
 import Page4 from './views/nav2/Page4.vue'
 import Page5 from './views/nav2/Page5.vue'
 import Page6 from './views/nav3/Page6.vue'
@@ -65,6 +68,26 @@ let routes = [
             { path: '/echarts', component: echarts, name: 'echarts' }
         ]
     },
+    {
+        path: '/',
+        component: Home,
+        name: '技术栈',
+        iconCls: 'fa fa-telegram',
+        children: [
+            { path: '/promotion', component: promotion, name: '每日提升' }
+        ]
+    },
+    {
+        path: '/',
+        component: Home,
+        name: '',
+        iconCls: 'fa fa-address-card',
+        leaf: true,//只有一个节点
+        children: [
+            { path: '/user', component: user, name: '我的资料' }
+        ]
+    },
+    
     {
         path: '*',
         hidden: true,

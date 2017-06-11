@@ -23,8 +23,8 @@
       return {
         logining: false,
         ruleForm2: {
-          account: 'admin',
-          checkPass: '123456'
+          account: 'tanjunyi@danlu.com',
+          checkPass: 'tanjunyi'
         },
         rules2: {
           account: [
@@ -50,19 +50,24 @@
             //_this.$router.replace('/table');
             this.logining = true;
             //NProgress.start();
-            var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass };
-            requestLogin(loginParams).then(data => {
+            var loginParams = { account: this.ruleForm2.account, password: this.ruleForm2.checkPass };
+            requestLogin(loginParams).then(response => {
               this.logining = false;
               //NProgress.done();
-              let { msg, code, user } = data;
-              if (code !== 200) {
-                this.$message({
+              let { msg, data, status } = response;
+              if (status == 0) {
+                sessionStorage.setItem('user', JSON.stringify(data) );
+                _this.$message({
+                  message: "登录成功",
+                  type: 'success'
+                });
+                _this.$router.push({ path: '/user' });
+              } else {
+                
+                _this.$message({
                   message: msg,
                   type: 'error'
                 });
-              } else {
-                sessionStorage.setItem('user', JSON.stringify(user));
-                this.$router.push({ path: '/table' });
               }
             });
           } else {
