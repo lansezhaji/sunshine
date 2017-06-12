@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var stack = require('./routes/stack');
 var users = require('./routes/users');
-
+var http = require('http');
 var app = express();
 
 // view engine setup
@@ -58,6 +58,19 @@ app.use(function(err, req, res, next) {
   });
 });
 
+var port =  3000 ;
+app.set('port', port);
 
+/**
+ * Create HTTP server.
+ */
 
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+console.log("服务已经在启动，端口："+port);
 module.exports = app;
