@@ -46,9 +46,15 @@ router.post('/deleteStack', function(req, res, next) {
 				data:{ },
 				msg:""
 			}
+			if(vals.affectedRows >0 ){
+				data.msg = "删除成功"
+			}else{
+				data.status = -1
+				data.msg = "删除失败"
+			}
 			console.log(vals);
 			
-			res.json(vals);
+			res.json(data);
 		}
 
 		//do something
