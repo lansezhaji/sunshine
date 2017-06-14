@@ -7,35 +7,7 @@
        
         <el-row >
             <el-form label-width="100px">
-                <el-col :span="4">
-                    <el-form-item label-width="20px">
-                        <el-button @click="updateStack()" type="text">＋新增</el-button>
-                    </el-form-item>
-                </el-col>
-                
-                <el-col v-for="stack in stackList" class="stackItem">
-                    <el-form-item label="标题：">
-                        <el-col> 
-                            <el-col :span="20">
-                                <router-link to="/stackDetail">
-                                    <el-button type="text">
-                                        {{stack.title}}
-                                    </el-button>
-                                </router-link>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-button @click="updateStack(stack)" type="text">编辑</el-button>
-                                <el-button @click="deleteStack(stack)" type="text">删除</el-button>
-                            </el-col>
-                        </el-col>
-                    </el-form-item>
-                    <el-form-item label="创建人：">
-                        <el-col> {{stack.createPerson}}  <strong style="margin-left:30px">创建时间：</strong>{{getTime(stack.createTime)}}   </el-col>
-                    </el-form-item>
-                    <el-form-item label="内容：">
-                        <el-col> {{stack.content}}     </el-col> 
-                    </el-form-item>          
-                </el-col>
+                技术展
             </el-form>
         </el-row>
         <el-dialog
@@ -44,7 +16,7 @@
                   size="large" >
                   <el-form label-width="50px" :model="updateForm">
                     <el-form-item label="标题">
-                            <el-input v-model="updateForm.title"></el-input>
+                        <el-input v-model="updateForm.title"></el-input>
                     </el-form-item>
                     <el-form-item label="内容">
                         <el-input v-model="updateForm.content" type="textarea" size="large" :rows="10"></el-input>

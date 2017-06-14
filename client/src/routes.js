@@ -7,6 +7,7 @@ import Form from './views/nav1/Form.vue'
 import user from './views/user/myAccount.vue'
 
 import promotion from './views/techStack/promotion.vue'  //每日提升
+import stackDetail from './views/techStack/stackDetail.vue'  //stack详情
 
 import Page4 from './views/nav2/Page4.vue'
 import Page5 from './views/nav2/Page5.vue'
@@ -74,7 +75,8 @@ let routes = [
         name: '技术栈',
         iconCls: 'fa fa-telegram',
         children: [
-            { path: '/promotion', component: promotion, name: '每日提升' }
+            { path: '/promotion', component: promotion, name: '每日提升' },
+            { path: '/stackDetail', component: stackDetail, name: '详情',hidden:true }
         ]
     },
     {
@@ -92,7 +94,7 @@ let routes = [
     {
         path: '*',
         hidden: true,
-        redirect: { path: '/404' }
+        redirect: { path: '/*' }
     }
 ];
 

@@ -24,7 +24,7 @@
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="状态：" class="userMessage">
-                        <span >{{getUserStatus(userForm.userStatus)}}</span>                        
+                        <span >{{getUserStatus(userForm.status)}}</span>                        
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
@@ -58,7 +58,7 @@
             var data = {
                 userForm:{
                     account:"",
-                    userStatus:1,
+                    status:1,
                     lastLogin : "1497437603111"
                 },
                 loginHistory: [ ],
