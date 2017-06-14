@@ -25,6 +25,7 @@ router.post('/login', function(req, res, next) {
 			console.log(vals);
 			if(vals.length>0){
 				data.data.userName = vals[0].userName
+				data.data.id = vals[0].id
 			}else{
 				data.status = -1;
 				data.msg = "用户名或者密码错误！"

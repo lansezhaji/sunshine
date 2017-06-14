@@ -1,29 +1,153 @@
 <template>
-    <section class="chart-container">
-        <el-row>
-	123
+    <el-row class="myAccount">
+        <el-row class="content">
+            <el-form label-width="150px">
+                <el-col :span="10">
+                    <el-form-item label="账号：" class="userMessage">
+                        <span >{{userForm.account}}</span>                      
+                    </el-form-item>
+                </el-col>
+                <el-col :span="10">
+                    <el-form-item label="密码：" class="userMessage">
+                        <span >******</span>                        
+                    </el-form-item>
+                </el-col>
+                <el-col :span="10">
+                    <el-form-item label="姓名：" class="userMessage">
+                        <span >{{userForm.userName}}</span>                     
+                    </el-form-item>
+                </el-col>
+                <el-col :span="10">
+                    <el-form-item label="角色：" class="userMessage">
+                        <span >{{userForm.role}}</span>                     
+                    </el-form-item>
+                </el-col>
+                <el-col :span="10">
+                    <el-form-item label="状态：" class="userMessage">
+                        <span >{{getUserStatus(userForm.userStatus)}}</span>                        
+                    </el-form-item>
+                </el-col>
+                <el-col :span="10">
+                    <el-form-item label="上次登录时间：" class="userMessage">
+                        <span >{{getLastLoginTime(userForm.lastLogin)}}</span>                        
+                    </el-form-item>
+
+                </el-col>               
+            </el-form>
+
         </el-row>
-    </section>
+        
+<!--        <el-row class="content">
+            <el-row class="history title" >
+                登录历史记录：
+            </el-row>
+            <el-row v-for="item in loginHistory" class="history">
+                <el-col :span="6">{{item.date}}</el-col>
+                <el-col :span="16">{{item.address}}</el-col>
+            </el-row>
+        </el-row> -->
+
+    </el-row>
+
+
 </template>
+<script >
+    import { getUserInfo } from '../../api/api';
+    export default{
+        data : function(){
+            var data = {
+                userForm:{
+                    account:"",
+                    userStatus:1,
+                    lastLogin : "1497437603111"
+                },
+                loginHistory: [ ],
+                rules:{
 
-<script>
-    export default {
-        data() {
-            return {
-
+                }
+            }
+            return data
+        },
+        methods:{
+            debug:function(){
+                debugger
+            },
+            /**
+             * 获取用户基本信息
+             * @return {[type]} [description]
+             */
+            getUserInfo : function(id){
+                var that = this;
+                var url = '/api/user/getUserInfo';
+                var reqData = {
+                    id : id
+                }
+                getUserInfo(reqData).then(response => {
+                    let { msg, data, status } = response;
+                      if (status == '0') {
+                          that.userForm = data;
+                      } else {
+                          that.$message.error(msg);
+                      }                     
+                })
+            },
+            /**
+             * 获取用户状态
+             * @param  {[type]} state [description]
+             * @return {[type]}       [description]
+             */
+            getUserStatus : function(state){
+                return state ? '启用' : '停用'
+            },
+            /**
+             * 获取创建时间
+             * @return {[type]} [description]
+             */
+            getLastLoginTime : function(timeT){
+                if (timeT) {
+                    var tms = parseInt(timeT);
+                    var time = new Date(tms);
+                    return time.toLocaleString();
+                };
             }
         },
+        beforeRouteEnter: function (to,from,next) {
+          next(vm => {
+            var user = sessionStorage.getItem('user');
+            if (user) {
+                user = JSON.parse(user);
+                vm.getUserInfo(user.id);
+            }
+            
 
-        methods: {
-
-        },
+          });
+        }
     }
 </script>
-
-<style scoped>
-
-
-    .el-col {
-        padding: 30px 20px;
+<style>
+    .content{
+        margin-left: 20px;
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #d1dbe5;
+        border-radius: 4px;
+        background-color: #fff;
+        overflow: hidden;
+    }
+    .userMessage{
+        text-align: left;
+    }
+    .history{
+        line-height: 40px;
+    }
+    .history:hover{
+        background-color: #eee;
+    }
+    .title{
+        text-align:left;
+        margin-bottom:30px;
+        padding-left: 20px;
+        background-color: #efefef;
+        border-radius: 3px;
     }
 </style>

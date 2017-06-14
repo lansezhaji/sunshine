@@ -22,3 +22,5 @@ export const getStackList = params => { return axios.post(`/api/stack/getStackLi
 export const updateStack = params => { return axios.post(`/api/stack/saveStack`, params).then(res => res.data); };
 export const deleteStack = params => { return axios.post(`/api/stack/deleteStack`, params).then(res => res.data); };
 
+// 获取用户信息
+export const getUserInfo = params => { return axios.post(`/api/user/getUserInfo`, params).then(res => res.data); };

@@ -17,6 +17,7 @@
 
 <script>
   import { requestLogin } from '../api/api';
+  import md5 from 'js-md5';
   //import NProgress from 'nprogress'
   export default {
     data() {
@@ -24,7 +25,7 @@
         logining: false,
         ruleForm2: {
           account: 'tanjunyi@danlu.com',
-          checkPass: 'tanjunyi'
+          checkPass: '123456'
         },
         rules2: {
           account: [
@@ -50,7 +51,7 @@
             //_this.$router.replace('/table');
             this.logining = true;
             //NProgress.start();
-            var loginParams = { account: this.ruleForm2.account, password: this.ruleForm2.checkPass };
+            var loginParams = { account: this.ruleForm2.account, password: md5(this.ruleForm2.checkPass) };
             requestLogin(loginParams).then(response => {
               this.logining = false;
               //NProgress.done();
