@@ -22,10 +22,15 @@ router.post('/login', function(req, res, next) {
 				data:{ },
 				msg:""
 			}
-			console.log(vals);
 			if(vals.length>0){
 				data.data.userName = vals[0].userName
 				data.data.id = vals[0].id
+				// 更新最后登录时间
+				var time = new Date();
+				var timeS = time.getTime();
+				query('update user set u_last_time = u_login_time,u_login_time = ? where u_id = ?',[timeS,vals[0].id],function(){
+					console.log("更新登录时间成功");
+				})
 			}else{
 				data.status = -1;
 				data.msg = "用户名或者密码错误！"

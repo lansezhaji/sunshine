@@ -24,3 +24,4 @@ export const deleteStack = params => { return axios.post(`/api/stack/deleteStack
 
 // 获取用户信息
 export const getUserInfo = params => { return axios.post(`/api/user/getUserInfo`, params).then(res => res.data); };
+export const updateUserInfo = params => { return axios.post(`/api/user/updateUserInfo`, params).then(res => res.data); };
