@@ -14,9 +14,12 @@
     "echarts": "^3.3.2",
     "element-ui": "^1.2.8",
     "font-awesome": "^4.7.0",
+    "jquery": "^3.2.1",
     "js-md5": "^0.4.2",
+    "layui": "0.0.1",
     "nprogress": "^0.2.0",
     "vue": "^2.2.2",
+    "vue-quill-editor": "^2.2.1",
     "vue-router": "^2.3.0",
     "vuex": "^2.0.0-rc.6"
   },

@@ -8,6 +8,7 @@ import user from './views/user/myAccount.vue'
 
 import promotion from './views/techStack/promotion.vue'  //每日提升
 import stackDetail from './views/techStack/stackDetail.vue'  //stack详情
+import createStack from './views/techStack/createStack.vue'  //stack详情
 
 import Page4 from './views/nav2/Page4.vue'
 import Page5 from './views/nav2/Page5.vue'
@@ -76,7 +77,8 @@ let routes = [
         iconCls: 'fa fa-telegram',
         children: [
             { path: '/promotion', component: promotion, name: '每日提升' },
-            { path: '/stackDetail', component: stackDetail, name: '详情',hidden:true }
+            { path: '/stackDetail', component: stackDetail, name: '',hidden:true },
+            { path: '/createStack', component: createStack, name: '',hidden:true }
         ]
     },
     {

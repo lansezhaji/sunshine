@@ -5,11 +5,11 @@ var query = require("../model/mysql.js");
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
-
+// 获取列表
 router.post('/getStackList', function(req, res, next) {
 	var s_type = req.body.type;
 	var queryArr = [s_type];
-	query("select s_id as id , s_type as type, s_create_time as createTime ,u_user_name as createPerson ,s_title as title ,s_content as content  from user,stack where u_id = s_create_person and s_type=?",queryArr,function(err,vals,fields){
+	query("select s_id as id , s_type as type, s_create_time as createTime ,u_user_name as createPerson ,s_title as title from user,stack where u_id = s_create_person and s_type=?",queryArr,function(err,vals,fields){
 		if(err){
 			res.json({
 				status:'-1',
@@ -30,7 +30,31 @@ router.post('/getStackList', function(req, res, next) {
 	});
 
 });
+router.post('/getStackDetail', function(req, res, next) {
+	var s_type = req.body.s_type;
+	var s_id = req.body.stackId
+	var queryArr = [s_id,s_type];
+	query("select s_id as id , s_type as type, s_create_time as createTime ,u_user_name as createPerson ,s_title as title ,s_content as content  from user,stack where u_id = s_create_person and s_id = ? and s_type=?",queryArr,function(err,vals,fields){
+		if(err){
+			res.json({
+				status:'-1',
+				msg:"查询失败"
+			})
+		}else{
+			var data = {
+				status:0,
+				data:vals[0],
+				msg:""
+			}
+			console.log(data);
+			
+			res.json(data);
+		}
 
+		//do something
+	});
+
+});
 router.post('/deleteStack', function(req, res, next) {
 	var id = req.body.id;
 	var queryArr = [id];

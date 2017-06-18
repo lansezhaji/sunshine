@@ -1,60 +1,73 @@
 <template>
     <section class="chart-container">
-        <el-row>
+<!--         <el-row>
            <el-button @click="getStackList">获取列表</el-button>
 	       <el-button @click="debug">debug</el-button>
-        </el-row>
+        </el-row> -->
        
         <el-row >
-            <el-form label-width="100px">
-                技术展
-            </el-form>
+            <el-col class="stackHeader" >
+                <h2>{{stackDetail.title}}</h2>
+                阅读：135 
+                <el-button  type="text">
+                    <i class="el-icon-star-on" size="small"></i>赞 123
+                </el-button>
+                <el-button  type="text">
+                    <i class="el-icon-plus" size="small"></i>收藏 134
+                </el-button>
+                {{getTime(stackDetail.createTime)}}
+
+            </el-col>
+            <el-row>
+                <el-col :span="18" style="border-right:1px dashed lightgray">
+                    <div id="stackContent">
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <h3>相关推荐：</h3>
+                </el-col>
+            </el-row>
         </el-row>
-        <el-dialog
-                  title="提示"
-                  :visible.sync="updateDialogVisible"
-                  size="large" >
-                  <el-form label-width="50px" :model="updateForm">
-                    <el-form-item label="标题">
-                        <el-input v-model="updateForm.title"></el-input>
-                    </el-form-item>
-                    <el-form-item label="内容">
-                        <el-input v-model="updateForm.content" type="textarea" size="large" :rows="10"></el-input>
-                    </el-form-item>
-                  </el-form>
-                  <span slot="footer" class="dialog-footer">
-                    <el-button @click="updateDialogVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="saveStack">确 定</el-button>
-                  </span>
-                </el-dialog>
     </section>
 </template>
 
 <script>
     import { getStackList } from '../../api/api';
-    import { updateStack } from '../../api/api';
-    import { deleteStack } from '../../api/api';
+    import { getStackDetail } from '../../api/api';
 
 
     export default {
         data() {
             return {
-
-                stackList : [],
-                updateDialogVisible : false,
-                updateForm : {
-                    id : "",
-                    title : "",
-                    content : "",
-                    createPerson : "",
-                    createTime : ""
-                }
+                stackDetail : {}
             }
         },
 
         methods: {
             debug : function(){
                 debugger
+            },
+            /**
+             * 获取详情
+             * @return {[type]} [description]
+             */
+            getStackDetail : function(){
+                var _this = this;
+                var reqData = {
+                    s_type : 1,
+                    stackId : this.$route.query.stackId ,
+                }
+                getStackDetail(reqData).then(response => {
+                    let { status , data , msg} = response;
+                    if (status == 0) {
+                        _this.stackDetail = data;
+                        setTimeout(function(){
+                            $("#stackContent").html(_this.stackDetail.content)
+                        },300)
+                    }else{
+                        _this.$message.error(msg)
+                    }
+                })
             },
             /**
              * 获取列表
@@ -84,15 +97,7 @@
                 var date = new Date(times)
                 return date.toLocaleString()
             },
-            /**
-             * 更新数据
-             * @param  {[type]} stack [description]
-             * @return {[type]}       [description]
-             */
-            updateStack :function(stack){
-                this.updateDialogVisible = true;
-                this.updateForm = stack || {}
-            },
+
             deleteStack:function(stack){
                 this.$confirm('确定要删除该数据？',"提示",{
                     
@@ -114,34 +119,12 @@
 
                 })
             },
-            saveStack : function(){
-                var _this = this;
-                var time = new Date();
-                var times = time.valueOf();
-                var reqData = {
-                    id : this.updateForm.id,
-                    type : 1,
-                    createTime : times ,
-                    createPerson : 1 ,
-                    title : this.updateForm.title,
-                    content : this.updateForm.content
-                }
-                updateStack(reqData).then(response => {
-                    let { status , data , msg} = response;
-                    if (status == 0) {
-                        _this.updateDialogVisible = false;
-                        _this.$message.success("保存成功")
-                        _this.getStackList();
-                    }else{
-                        _this.$message.error(msg)
-                    }
-                })
-            }
+
 
         },
         beforeRouteEnter: function (to,from,next) {
           next(vm => {
-            vm.getStackList();
+            vm.getStackDetail();
           });
         }
     }
@@ -153,5 +136,20 @@
         margin: 5px;
         border-radius: 5px;
         border:  1px solid #d8d8d8;
+    }
+    .stackHeader{
+        padding: 30px;
+        color: white;
+        background: url(../../assets/header-img.png) no-repeat;
+    }
+    .avata{
+        width: 50px;
+        height: 50px;
+        border-radius: 25px;
+        overflow: hidden;
+    }
+    .avata img{
+        width: 50px;
+        height: 50px;
     }
 </style>

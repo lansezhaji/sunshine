@@ -19,6 +19,7 @@ export const addUser = params => { return axios.get(`${base}/user/add`, { params
 // 获取stack列表
 
 export const getStackList = params => { return axios.post(`/api/stack/getStackList`, params).then(res => res.data); };
+export const getStackDetail = params => { return axios.post(`/api/stack/getStackDetail`, params).then(res => res.data); };
 export const updateStack = params => { return axios.post(`/api/stack/saveStack`, params).then(res => res.data); };
 export const deleteStack = params => { return axios.post(`/api/stack/deleteStack`, params).then(res => res.data); };
 

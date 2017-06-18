@@ -10,14 +10,17 @@ import Vuex from 'vuex'
 //import NProgress from 'nprogress'
 //import 'nprogress/nprogress.css'
 import routes from './routes'
+import $ from 'jquery'
 // import Mock from './mock'
 // Mock.bootstrap();
 import 'font-awesome/css/font-awesome.min.css'
+// 富文本插件
+import VueQuillEditor from 'vue-quill-editor'
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
-
+Vue.use(VueQuillEditor)
 //NProgress.configure({ showSpinner: false });
 
 const router = new VueRouter({

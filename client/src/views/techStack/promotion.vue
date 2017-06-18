@@ -6,55 +6,51 @@
         </el-row>
        
         <el-row >
-            <el-form label-width="100px">
-                <el-col :span="4">
-                    <el-form-item label-width="20px">
-                        <el-button @click="updateStack()" type="text">＋新增</el-button>
-                    </el-form-item>
-                </el-col>
-                
-                <el-col v-for="stack in stackList" class="stackItem">
-                    <el-form-item label="标题：">
-                        <el-col> 
-                            <el-col :span="20">
-                                <router-link to="/stackDetail">
-                                    <el-button type="text">
-                                        {{stack.title}}
+            <el-col :span="16">
+                <el-form label-width="100px">
+                    <el-col :span="4" >
+                        <el-form-item label-width="20px">
+                            <router-link to="/createStack">
+                                <el-button  type="text">＋新增</el-button>
+                            </router-link>
+                        </el-form-item>
+                    </el-col>
+                    <el-col style="line-height:40px;margin-left:5px">
+                        <el-input placeholder="搜索内容">
+                            <template slot="append">搜索</template>
+                        </el-input>
+                    </el-col>
+                    <el-col v-for="stack in stackList" class="stackItem">
+                             <el-col class="proTitle">
+                                <router-link :to="{path:'/stackDetail',query:{stackId:stack.id}}">
+                                    <el-button type="text" size="small">
+                                        <h3>{{stack.title}}</h3>
                                     </el-button>
                                 </router-link>
                             </el-col>
-                            <el-col :span="4">
-                                <el-button @click="updateStack(stack)" type="text">编辑</el-button>
-                                <el-button @click="deleteStack(stack)" type="text">删除</el-button>
+                            <el-col class="create">
+                                {{stack.createPerson}} 发表于：{{getTime(stack.createTime)}} 
                             </el-col>
-                        </el-col>
-                    </el-form-item>
-                    <el-form-item label="创建人：">
-                        <el-col> {{stack.createPerson}}  <strong style="margin-left:30px">创建时间：</strong>{{getTime(stack.createTime)}}   </el-col>
-                    </el-form-item>
-                    <el-form-item label="内容：">
-                        <el-col> {{stack.content}}     </el-col> 
-                    </el-form-item>          
-                </el-col>
-            </el-form>
+                            <el-col>
+                                <el-col :span="2">
+                                    <el-button size="small" type="text">
+                                        <i class="el-icon-star-on">14</i>
+                                    </el-button>
+                                </el-col>
+                                <el-col :span="2">
+                                    <el-button size="small" type="text">
+                                        <i class="el-icon-edit">14</i>
+                                    </el-button>
+                                </el-col>
+                            </el-col>                        
+     
+                    </el-col>
+                </el-form>
+            </el-col>
+            <el-col :span="8">
+            </el-col>
+
         </el-row>
-        <el-dialog
-                  title="提示"
-                  :visible.sync="updateDialogVisible"
-                  size="large" >
-                  <el-form label-width="50px" :model="updateForm">
-                    <el-form-item label="标题">
-                            <el-input v-model="updateForm.title"></el-input>
-                    </el-form-item>
-                    <el-form-item label="内容">
-                        <el-input v-model="updateForm.content" type="textarea" size="large" :rows="10"></el-input>
-                    </el-form-item>
-                  </el-form>
-                  <span slot="footer" class="dialog-footer">
-                    <el-button @click="updateDialogVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="saveStack">确 定</el-button>
-                  </span>
-                </el-dialog>
     </section>
 </template>
 
@@ -70,13 +66,6 @@
 
                 stackList : [],
                 updateDialogVisible : false,
-                updateForm : {
-                    id : "",
-                    title : "",
-                    content : "",
-                    createPerson : "",
-                    createTime : ""
-                }
             }
         },
 
@@ -142,29 +131,6 @@
 
                 })
             },
-            saveStack : function(){
-                var _this = this;
-                var time = new Date();
-                var times = time.valueOf();
-                var reqData = {
-                    id : this.updateForm.id,
-                    type : 1,
-                    createTime : times ,
-                    createPerson : 1 ,
-                    title : this.updateForm.title,
-                    content : this.updateForm.content
-                }
-                updateStack(reqData).then(response => {
-                    let { status , data , msg} = response;
-                    if (status == 0) {
-                        _this.updateDialogVisible = false;
-                        _this.$message.success("保存成功")
-                        _this.getStackList();
-                    }else{
-                        _this.$message.error(msg)
-                    }
-                })
-            }
 
         },
         beforeRouteEnter: function (to,from,next) {
@@ -179,7 +145,23 @@
 
     .stackItem{
         margin: 5px;
-        border-radius: 5px;
-        border:  1px solid #d8d8d8;
+        padding-left: 20px;
+        border:  1px solid #ddd;
+    }
+    .proTitle{
+        font-size: 20px;
+        font-weight: 900;
+    }
+    .create{
+        font-size: 14px;
+        color: gray;
+        line-height: 30px
+    }
+    .promoImg{
+        width: 100px;
+        height: 100px;
+        margin: 5px;
+        border-radius: 2px;
+        border: 1px solid #eee;
     }
 </style>
