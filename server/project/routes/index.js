@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var query=require("../model/mysql.js");
+var mysql=require("../model/mysql.js");
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -10,7 +10,7 @@ router.post('/login', function(req, res, next) {
 	var account = req.body.account;
 	var password = req.body.password;
 	var queryArr = [account,password];
-	query("select u_id as id,u_account as account , u_user_name as userName from user where u_account =? AND u_password=?",queryArr,function(err,vals,fields){
+	mysql.query("select u_id as id,u_account as account , u_user_name as userName from user where u_account =? AND u_password=?",queryArr,function(err,vals,fields){
 		if(err){
 			res.json({
 				status:'-1',
@@ -28,7 +28,7 @@ router.post('/login', function(req, res, next) {
 				// 更新最后登录时间
 				var time = new Date();
 				var timeS = time.getTime();
-				query('update user set u_last_time = u_login_time,u_login_time = ? where u_id = ?',[timeS,vals[0].id],function(){
+				mysql.query('update user set u_last_time = u_login_time,u_login_time = ? where u_id = ?',[timeS,vals[0].id],function(){
 					console.log("更新登录时间成功");
 				})
 			}else{
