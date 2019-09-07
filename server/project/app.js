@@ -9,6 +9,7 @@ var routes = require('./routes/index');
 var stack = require('./routes/stack');
 var users = require('./routes/users');
 var file = require('./routes/file');
+var oil = require('./routes/oil');
 var journal = require('./routes/journal');
 var http = require('http');
 var app = express();
@@ -29,10 +30,11 @@ app.use('/', routes);
 app.use('/stack', stack);
 app.use('/user', users);
 app.use('/file', file);
+app.use('/oil', oil);
 app.use('/journal', journal);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
@@ -43,7 +45,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
+  app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
@@ -54,7 +56,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
@@ -62,7 +64,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var port =  3000 ;
+var port = 3000;
 app.set('port', port);
 
 /**
@@ -76,5 +78,5 @@ var server = http.createServer(app);
  */
 
 server.listen(port);
-console.log("服务已经在启动，端口："+port);
+console.log("服务已经在启动，端口：" + port);
 module.exports = app;
