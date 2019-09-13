@@ -61,13 +61,30 @@ const objectFormat = function (obj) {
 }
 
 const oil = {
+    getCarInfo(id) {
+        let sql = 'select id, open_id, car_name from car_list where id = "?"  and is_delete=0 '
+        return promisify(sql, [id])
+    },
+    // 获取加油列表数据
     getOilList(openId) {
-        let sql = `select user_id, oil_time,create_time,price,oil_type,oil_amount, total_price from oil_list where open_id='${openId}' `
+        let sql = `select id, user_id, oil_time,create_time,price,oil_type,oil_amount, total_price from oil_list where open_id='${openId}' and is_delete=0 `
         return promisify(sql, [])
     },
+    // 删除加油数据
+    delete(id) {
+        let sql = `delete from oil_list where id= ${id}`
+        return promisify(sql)
+
+    },
+    // 查询上一次数据
+    getLast(id) {
+        let sql = `select * from oil_list where  oil_time < ( select oil_time from oil_list where id = ${id})  order by oil_time asc limit 1`
+        return promisify(sql)
+    },
+    // 查询加油详情
     getDetail(id) {
-        let sql = 'select user_id, oil_time,create_time,price,oil_type,oil_amount, total_price from oil_list where id = "?" '
-        return promisify(sql, [id])
+        let sql = `select a.id,a.user_id,a.car_id, a.oil_time,a.create_time,a.price,a.oil_type,a.oil_amount, a.total_price,b.car_name ,a.mileage from oil_list as a left join car_list as b on a.car_id = b.id  where a.id=${id}`
+        return promisify(sql, [])
     },
     add(oil) {
         oil = objectFormat(oil)

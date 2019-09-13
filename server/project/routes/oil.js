@@ -88,11 +88,35 @@ router.get('/getOilList', async function (req, res, next) {
     res.json(info)
 })
 /**
+ * 删除加油数据
+ */
+router.get('/delete', async function (req, res, next) {
+
+    const info = await oil.delete(req.query.id);
+    res.json(info)
+})
+/**
  * 获取加油记录列表
  */
 router.get('/detail', async function (req, res, next) {
 
     const info = await oil.getDetail(req.query.id);
+    const last = await oil.getLast(req.query.id);
+    const detail = info.data[0] || {}
+    const lastDetail = last.data[0]
+    if (lastDetail) {
+        detail.hasLast = true
+        //上次加油时间
+        detail.last_time = lastDetail.oil_time;
+        detail.duration = ((new Date(detail.oil_time).getTime() - new Date(detail.last_time).getTime()) / 1000 / 60 / 60 / 24).toFixed(1)
+        // 计算公里数
+        detail.distance = detail.mileage - lastDetail.mileage
+        // 计算平均价格
+        detail.univalence = (detail.total_price / detail.distance).toFixed(4)
+        // 计算百公里油耗
+        detail.consumption = (detail.oil_amount / detail.univalence * 100).toFixed(4)
+
+    }
     console.log('------- info -----', info)
     res.json(info)
 });
