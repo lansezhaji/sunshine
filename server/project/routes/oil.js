@@ -96,6 +96,34 @@ router.get('/delete', async function (req, res, next) {
     res.json(info)
 })
 /**
+ * 删除加油数据
+ */
+router.get('/addCar', async function (req, res, next) {
+
+    const param = {
+        number: req.query.number,
+        openId: req.user.openId
+    }
+    const info = await oil.addCar(param);
+    res.json(info)
+})
+/**
+ * 删除加油数据
+ */
+router.get('/deleteCar', async function (req, res, next) {
+
+    const info = await oil.deleteCar(req.query.id);
+    res.json(info)
+})
+/**
+ * 获取汽车列表
+ */
+router.get('/carList', async function (req, res, next) {
+
+    const info = await oil.carList(req.user.openId);
+    res.json(info)
+})
+/**
  * 获取加油记录列表
  */
 router.get('/detail', async function (req, res, next) {

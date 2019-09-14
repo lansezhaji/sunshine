@@ -70,9 +70,25 @@ const oil = {
         let sql = `select id, user_id, oil_time,create_time,price,oil_type,oil_amount, total_price from oil_list where open_id='${openId}' and is_delete=0 `
         return promisify(sql, [])
     },
+    carList(openId) {
+        let sql = `select id, open_id , car_name from car_list where open_id = '${openId}' and is_delete = 0`
+        return promisify(sql)
+    },
     // 删除加油数据
     delete(id) {
         let sql = `delete from oil_list where id= ${id}`
+        return promisify(sql)
+
+    },
+    // 删除车辆数据
+    addCar(param) {
+        let sql = `insert into car_list (open_id,car_name) values('${param.openId}','${param.number}')`
+        return promisify(sql)
+
+    },
+    // 删除车辆数据
+    deleteCar(id) {
+        let sql = `update car_list set is_delete=1  where id= ${id}`
         return promisify(sql)
 
     },
