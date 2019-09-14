@@ -17,6 +17,8 @@ client.getKey = (key, field) => {
         client.hget(key, field, function (err, obj) {
             if (obj) {
                 resolve(obj)
+            } else {
+                resolve()
             }
         })
     })
@@ -27,7 +29,7 @@ router.use('/', async function (req, res, next) {
         console.log(req.headers)
         const _head = JSON.parse(req.headers._head)
         const { token } = _head;
-        console.log(token)
+        console.log('-------------', token)
 
         if (token) {
             const openId = await client.getKey(token, 'openId');
