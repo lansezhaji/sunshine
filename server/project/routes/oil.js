@@ -30,6 +30,7 @@ router.use('/', async function (req, res, next) {
         console.log(token)
 
         if (token) {
+            console.log('########## 登录成功')
             const openId = await client.getKey(token, 'openId');
             if (openId) {
                 req.user = {
@@ -38,6 +39,7 @@ router.use('/', async function (req, res, next) {
                 return next();
             }
         }
+        console.log('########## 登录失效，请重新登录')
         res.json({
             status: 302,
             msg: '登录失效，请重新登录'
@@ -82,8 +84,9 @@ router.get('/', function (req, res, next) {
  */
 
 router.get('/getOilList', async function (req, res, next) {
-
+    console.log('########## 登录失效，请重新登录')
     const info = await oil.getOilList(req.user.openId);
+
     console.log('------- info -----', info)
     res.json(info)
 })
