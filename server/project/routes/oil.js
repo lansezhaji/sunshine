@@ -26,6 +26,7 @@ router.use('/', async function (req, res, next) {
     if (req.path.indexOf('login') < 0) {
         console.log(" ------ 登录拦截 -------- ");
         const _head = JSON.parse(req.headers._head)
+        console.log(" ------ headr -------- ", req.headers._head);
         const { token } = _head;
         console.log(token)
 
