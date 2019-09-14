@@ -25,13 +25,7 @@ client.getKey = (key, field) => {
 router.use('/', async function (req, res, next) {
     if (req.path.indexOf('login') < 0) {
         console.log(" ------ 登录拦截 -------- ");
-        if (!req.headers._head) {
-            res.json({
-                status: 302,
-                msg: '登录失效，请重新登录'
-            })
-        }
-        const _head = JSON.parse(req._head)
+        const _head = JSON.parse(req.headers._head)
         const { token } = _head;
         console.log(token)
 
