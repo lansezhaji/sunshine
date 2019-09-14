@@ -106,7 +106,7 @@ const oil = {
         oil = objectFormat(oil)
         const oil_time = timeFormat(new Date())
         const create_time = timeFormat(new Date())
-        let sql = `insert into oil_list (user_id,open_id,car_id,oil_time,create_time,price,oil_type,oil_amount,total_price,mileage) values(${oil.user_id || ''},'${oil.open_id || ''}', ${oil.car_id || ''},'${oil_time || ''}','${create_time || ''}',${oil.price || ''},${oil.oil_type || ''},${oil.oil_amount || ''},${oil.total_price || ''},${oil.mileage || ''})`
+        let sql = `insert into oil_list (open_id,car_id,oil_time,create_time,price,oil_type,oil_amount,total_price,mileage) values('${oil.open_id || ''}', ${oil.car_id || ''},'${oil_time || ''}','${create_time || ''}',${oil.price || ''},${oil.oil_type || ''},${oil.oil_amount || ''},${oil.total_price || ''},${oil.mileage || ''})`
         return promisify(sql, [])
     }
 }

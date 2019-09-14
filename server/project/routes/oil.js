@@ -102,7 +102,7 @@ router.get('/addCar', async function (req, res, next) {
 
     const param = {
         number: req.query.number,
-        openId: req.user.openId
+        openId: req.user.openId,
     }
     const info = await oil.addCar(param);
     res.json(info)
@@ -142,7 +142,7 @@ router.get('/detail', async function (req, res, next) {
         // 计算平均价格
         detail.univalence = (detail.total_price / detail.distance).toFixed(4)
         // 计算百公里油耗
-        detail.consumption = (detail.oil_amount / detail.univalence * 100).toFixed(4)
+        detail.consumption = (detail.oil_amount / detail.distance * 100).toFixed(4)
 
     }
     console.log('------- info -----', info)
