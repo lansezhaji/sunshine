@@ -31,7 +31,7 @@ router.use('/', async function (req, res, next) {
                 msg: '登录失效，请重新登录'
             })
         }
-        const _head = JSON.parse(req.headers._head)
+        const _head = JSON.parse(req._head)
         const { token } = _head;
         console.log(token)
 
