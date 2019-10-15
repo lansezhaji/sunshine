@@ -93,12 +93,12 @@ const oil = {
 
     },
     // 查询上一次数据
-    getLast(id) {
-        let sql = `select * from oil_list where  oil_time < ( select oil_time from oil_list where id = ${id})  order by oil_time asc limit 1`
+    getLast(id,openId) {
+        let sql = `select * from oil_list where  oil_time < ( select oil_time from oil_list where id = ${id} ) and open_id = '${openId}' order by oil_time desc limit 1`
         return promisify(sql)
     },
     // 查询加油详情
-    getDetail(id) {
+    getDetail(id,openId) {
         let sql = `select a.id,a.user_id,a.car_id, a.oil_time,a.create_time,a.price,a.oil_type,a.oil_amount, a.total_price,b.car_name ,a.mileage from oil_list as a left join car_list as b on a.car_id = b.id  where a.id=${id}`
         return promisify(sql, [])
     },
