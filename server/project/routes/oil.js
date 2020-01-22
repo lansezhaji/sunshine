@@ -89,7 +89,7 @@ router.get('/version', function (req, res, next) {
     if (version == '0.0.1') {
         res.json({
             status: 0,
-            data: true,
+            data: 'oil',
             msg: ''
         });
     }
