@@ -46,5 +46,11 @@ router.post('/login', function (req, res, next) {
 
 });
 
+router.get('/test', function (req, res, next) {
+  res.json({
+    data: `收到消息：${JSON.stringify(req.query)}`
+  })
+});
+
 
 module.exports = router;
